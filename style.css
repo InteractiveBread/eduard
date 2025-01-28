@@ -1,0 +1,41 @@
+:root {
+	--bg: #1c1f1c;
+	--text: #eee;
+	--main-light: #00cf00;
+	--main-medium: #009a00;
+}
+body {
+	font-family: sans-serif;
+	background-color: var(--bg);
+	color: var(--text);
+}
+header {
+	text-align: center;
+	padding: 1rem;
+	color: var(--main-medium);
+}
+header img {
+	height: 3rem;
+	max-width: 90vw;
+}
+a {
+	color: var(--main-light);;
+}
+.settings, .days, .calculation {
+	padding: 2rem;
+	margin: 1rem;
+	border-radius: 1rem;
+	border: 1px solid black;
+}
+.day {
+	padding: 1rem;
+/*
+	background: blue;
+*/
+}
+footer {
+	font-family: Monospace;
+	font-size: 0.7rem;
+	text-align: center;
+	padding-top: 5rem;
+}
