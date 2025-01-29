@@ -107,7 +107,7 @@ class Eduard {
 			hours[factor] = Math.min((weekly_hours / 60)-prev_thresh, hourly_threshold-prev_thresh);
 			if (factor > 1) {
 				weekly_salary += hours[factor].toFixed(2) * factor;
-				this.info_hours.innerHTML += `<p>${hours[factor].toFixed(2)} Überstunde(n) ab Stunde ${Number(prev_thresh)+1}: <b>+${Math.round((factor-1)*100)}%</b>`;
+				this.info_hours.innerHTML += `<p>${hours[factor].toFixed(2)} wöchentliche Überstunde(n) ab Stunde ${Number(prev_thresh)+1}: <b>+${Math.round((factor-1)*100)}%</b>`;
 				this.info_calculation.innerHTML += ` + ${hours[factor].toFixed(2)} &middot; ${factor}`;
 			}
 			prev_thresh = hourly_threshold;
@@ -115,9 +115,15 @@ class Eduard {
 				break;
 			}
 		}
-		for (let factor in daily_overtime) {
-			weekly_salary += (factor-1).toFixed(2) * daily_overtime[factor];
-			this.info_calculation.innerHTML += ` + ${(factor-1).toFixed(2)} &middot; ${daily_overtime[factor]}`;
+		prev_thresh = 0;
+		for (let thresh in OT_DAILY) {
+			let factor = OT_DAILY[thresh];
+			if (factor > 1) {
+				weekly_salary += (factor-1).toFixed(2) * daily_overtime[factor];
+				this.info_hours.innerHTML += `<p>${daily_overtime[factor].toFixed(2)} tägliche Überstunde(n) ab Stunde  ${Number(prev_thresh)+1}: <b>+${Math.round((factor-1)*100)}%</b>`;
+				this.info_calculation.innerHTML += ` + ${(factor-1).toFixed(2)} &middot; ${daily_overtime[factor]}`;
+			}
+			prev_thresh = thresh;
 		}
 		weekly_salary *= (this.salary / 50)
 		this.info_calculation.innerHTML += `) = ${weekly_salary.toFixed(2)} €</p>`;

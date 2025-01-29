@@ -1,5 +1,10 @@
 # Eduard - Changelog
 
+## 0.1.1 (2025-01-29)
+
+### eduard.js
+- Darstellung der täglichen Überstunden in der Wochenübersicht
+
 ## 0.1.0 (2025-01-29)
 
 Berechnung der täglichen und wöchentlichen Überstunden und des Wochenlohns.
