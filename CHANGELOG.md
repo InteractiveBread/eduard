@@ -1,5 +1,16 @@
 # Eduard - Changelog
 
+## 0.1.0 (2025-01-29)
+
+Berechnung der täglichen und wöchentlichen Überstunden und des Wochenlohns.
+
+### constants.js
+- Testwerte für Lohn und Überstunden
+
+### eduard.js
+- `EdeDay` - Ermittlung der täglichen Überstunden
+- `Eduard` - Ermittlung der wöchentlichen Überstunden und Berechnug des gesamten Wochenlohns
+
 ## 0.0.1 (2025-01-28)
 
 Arbeitszeiten der einzelnen Tage werden ermittelt und für die Woche zusammengerechnet.
