@@ -96,12 +96,16 @@ class Eduard {
 		}
 		console.log('Daily overtime:');
 		console.log(daily_overtime);
-		this.info_hours.innerHTML = `<p>Wochenarbeitszeit: ${(weekly_hours/60).toFixed(2)} Stunden</p>`;
 		// Wöchentliche Überstunden berechnen
 		var hours = {};
 		let prev_thresh = 0;
-		var weekly_salary = Math.min((weekly_hours/60),50);
-		this.info_calculation.innerHTML = `(${this.salary} / 50) &middot; (${Math.min((weekly_hours/60).toFixed(2),50)} &middot; 1`;
+		if (weekly_hours/60 < 50) {
+			var weekly_salary = 50;
+			this.info_hours.innerHTML = `<p>Wochenarbeitszeit: <s>${(weekly_hours/60).toFixed(2)} Stunden</s> <b>50 Stunden</b> angerechnet!</p>`;
+		} else {
+			this.info_hours.innerHTML = `<p>Wochenarbeitszeit: ${(weekly_hours/60).toFixed(2)} Stunden</p>`;
+		}
+		this.info_calculation.innerHTML = `(${this.salary} / 50) &middot; (50 &middot; 1`;
 		for (let hourly_threshold in OT_WEEKLY) {
 			let factor = OT_WEEKLY[hourly_threshold];
 			hours[factor] = Math.min((weekly_hours / 60)-prev_thresh, hourly_threshold-prev_thresh);
@@ -118,7 +122,7 @@ class Eduard {
 		prev_thresh = 0;
 		for (let thresh in OT_DAILY) {
 			let factor = OT_DAILY[thresh];
-			if (factor > 1) {
+			if (factor > 1 && daily_overtime[factor] > 0) {
 				weekly_salary += (factor-1).toFixed(2) * daily_overtime[factor];
 				this.info_hours.innerHTML += `<p>${daily_overtime[factor].toFixed(2)} tägliche Überstunde(n) ab Stunde  ${Number(prev_thresh)+1}: <b>+${Math.round((factor-1)*100)}%</b>`;
 				this.info_calculation.innerHTML += ` + ${(factor-1).toFixed(2)} &middot; ${daily_overtime[factor]}`;
