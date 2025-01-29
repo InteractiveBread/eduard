@@ -1,11 +1,32 @@
 :root {
 	--bg: #1c1f1c;
+	--bg-light: #202320;
 	--text: #eee;
+	--text-dark: #a9a9a9;
 	--main-light: #00cf00;
 	--main-medium: #009a00;
+	--warning1 : #ffa13c;
+	--warning2 : #ff713a;
+	--warning3 : #ff3a3a;
+	--attn1-1 : #41d3ff;
+	--attn1-2 : #000;
+	--attn1-3 : #000;
+	--attn2-1 : #db5aff;
+	--attn2-2 : #000;
+	--attn2-3 : #000;
 }
+.warning1 { color: var(--warning1); }
+.warning2 { color: var(--warning2); }
+.warning3 { color: var(--warning3); }
+.attn1-1 { color: var(--attn1-1); }
+.attn1-2 { color: var(--attn1-2); }
+.attn1-3 { color: var(--attn1-3); }
+.attn2-1 { color: var(--attn2-1); }
+.attn2-2 { color: var(--attn2-2); }
+.attn2-3 { color: var(--attn2-3); }
 body {
 	font-family: sans-serif;
+	line-height: 1.2rem;
 	background-color: var(--bg);
 	color: var(--text);
 }
@@ -19,7 +40,20 @@ header img {
 	max-width: 90vw;
 }
 a {
-	color: var(--main-light);;
+	color: var(--main-light);
+}
+s {
+	color: var(--text-dark);
+}
+input, select {
+	color: var(--text);
+	padding: .5rem;
+	border-radius: .4rem;
+	border: 1px solid var(--text-dark);
+	background: var(--bg);
+}
+input:hover, select:hover {
+	background: var(--bg-light);
 }
 .settings, .days, .calculation {
 	padding: 2rem;
@@ -28,10 +62,17 @@ a {
 	border: 1px solid black;
 }
 .day {
+	border-radius: .7rem;
+	border: none;
+	background: var(--bg-light);
 	padding: 1rem;
+	margin: 1rem 0rem;
 /*
 	background: blue;
 */
+}
+.day .label {
+	font-weight: bold;
 }
 footer {
 	font-family: Monospace;

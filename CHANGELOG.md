@@ -1,5 +1,15 @@
 # Eduard - Changelog
 
+## 0.1.2 (2025-01-29)
+
+### index.html / style.css
+- Style-Update
+- erweiterte Farbpalette
+
+### eduard.js
+- kleinere Bugfixes beim Neuberechnen der täglichen Überstunden
+- Unterstützung der erweiterten Farbpalette (CSS-Klassen)
+
 ## 0.1.1 (2025-01-29)
 
 ### eduard.js
