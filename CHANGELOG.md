@@ -2,6 +2,14 @@
 
 ## 0.1.3 (2025-02-02)
 
+### eduard.js / index.html / style.css
+- Layout-Update
+
+### eduard.js
+- Input-Feld für freie Eingabe der Gage
+
+## 0.1.3 (2025-02-02)
+
 ### eduard.js / style.css
 - Style-/Layout-Update
 

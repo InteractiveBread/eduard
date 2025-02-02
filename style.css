@@ -15,6 +15,7 @@
 	--attn2-2 : #000;
 	--attn2-3 : #000;
 }
+* { box-sizing: border-box; }
 .warning1 { color: var(--warning1); }
 .warning2 { color: var(--warning2); }
 .warning3 { color: var(--warning3); }
@@ -65,6 +66,18 @@ input:hover, select:hover {
 }
 .settings, .day, .calculation {
 	background: var(--bg-light);
+}
+.settings {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	grid-gap: 1rem;
+}
+.settings > div {
+	/* ... */
+}
+.settings * {
+	width: 100%;
+	margin: .5rem 0;
 }
 .day {
 	border-radius: .7rem;

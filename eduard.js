@@ -8,29 +8,34 @@ class Eduard {
 		// Wrapper-Div
 		// + enthält Divs für Einstellungen ("Settings"), Tage ("Days") und Berechungen ("Calculation")
 		// + verarbeitet das Update-Event
-		this.wrapper = document.querySelector('main')
-			.appendChild(document.createElement('div'));
-		this.wrapper.classList.add('wrapper');
+		this.wrapper = document.querySelector('div.wrapper');
 		
 		// Settings-Div (= Eintellungen)
-		this.settings = this.wrapper
-			.appendChild(document.createElement('div'));
-		this.settings.classList.add('settings');
+		this.settings = document.querySelector('div.settings');
 		// Auswahl des Wochengehalts
 		this.salary = 0;
-		var salary_input = document.createElement('select');
+		var salary_wrapper = document.querySelector('div.salary');
+		var salary_select_label = document.createElement('label');
+		var salary_select = document.querySelector('select[name="salary_select"]');
 		let null_option = document.createElement('option');
 		null_option.value = 0;
 		null_option.innerText = '[ Auswahl ]';
 		null_option.setAttribute('selected','');
-		salary_input.append(null_option);
+		salary_select.append(null_option);
 		for (let job_title in SALARIES) {
 			let option = document.createElement('option');
 			option.value = SALARIES[job_title];
 			option.innerText = `${job_title} (${SALARIES[job_title]} €)`;
-			salary_input.append(option);
+			salary_select.append(option);
 		}
-		this.settings.append(salary_input);
+		salary_select.addEventListener(
+			'input',
+			(e) => {
+				this.salary = e.target.value;
+				this.recalculateDays();
+			}
+		);
+		var salary_input = document.querySelector('input[name="salary_input"]');
 		salary_input.addEventListener(
 			'input',
 			(e) => {
@@ -38,12 +43,12 @@ class Eduard {
 				this.recalculateDays();
 			}
 		);
+		// Auswahl des Start- und Enddatums
+		var date_wrapper = document.querySelector('div.date');
 		
 		// Days-Div
 		// + hier werden die einzelnen Tage aufgelistet (Custom Element "EdeDay")
-		this.days = this.wrapper
-			.appendChild(document.createElement('div'));
-		this.days.classList.add('days');
+		this.days = document.querySelector('div.days');
 		// Tege zum Wrapper hinzufügen
 		// + bislang: irgendeine Woche von Montag bis Sonntag
 		// + später evtl. Auswahl des Start- und Endtermins über Date-Input
@@ -62,9 +67,7 @@ class Eduard {
 		);
 		
 		// Info-Div mit Stundenzahlen und Rechnung
-		this.info_box = this.wrapper
-			.appendChild(document.createElement('div'));
-		this.info_box.classList.add('calculation');
+		this.info_box = document.querySelector('div.calculation');
 		this.info_hours = this.info_box
 			.appendChild(document.createElement('div'));
 		this.info_calculation = this.info_box
@@ -94,8 +97,6 @@ class Eduard {
 				}
 			}
 		}
-		console.log('Daily overtime:');
-		console.log(daily_overtime);
 		// Wöchentliche Überstunden berechnen
 		var hours = {};
 		let prev_thresh = 0;
