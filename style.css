@@ -24,6 +24,7 @@
 .attn2-1 { color: var(--attn2-1); }
 .attn2-2 { color: var(--attn2-2); }
 .attn2-3 { color: var(--attn2-3); }
+.underlined { text-decoration: underline; }
 body {
 	font-family: sans-serif;
 	line-height: 1.2rem;
@@ -49,11 +50,12 @@ input, select {
 	color: var(--text);
 	padding: .5rem;
 	border-radius: .4rem;
-	border: 1px solid var(--text-dark);
+	border: 1px solid transparent;
 	background: var(--bg);
 }
 input:hover, select:hover {
 	background: var(--bg-light);
+	border-color: var(--text-dark);
 }
 .settings, .days, .calculation {
 	padding: 2rem;
@@ -61,10 +63,12 @@ input:hover, select:hover {
 	border-radius: 1rem;
 	border: 1px solid black;
 }
+.settings, .day, .calculation {
+	background: var(--bg-light);
+}
 .day {
 	border-radius: .7rem;
 	border: none;
-	background: var(--bg-light);
 	padding: 1rem;
 	margin: 1rem 0rem;
 /*

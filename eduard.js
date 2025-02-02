@@ -100,19 +100,20 @@ class Eduard {
 		var hours = {};
 		let prev_thresh = 0;
 		if (weekly_hours/60 < 50) {
-			this.info_hours.innerHTML = `<p>Wochenarbeitszeit: <s>${(weekly_hours/60).toFixed(2)} Stunden</s> <span class="warning3"><b>50 Stunden</b> angerechnet!</span></p>`;
+			var weekly_salary = 50;
+			this.info_hours.innerHTML = `<p>Wochenarbeitszeit: <s>${(weekly_hours/60).toFixed(2)} Stunden</s> <span class="warning2"><b>50 Stunden</b> angerechnet!</span></p>`;
 		} else {
-			this.info_hours.innerHTML = `<p>Wochenarbeitszeit: ${(weekly_hours/60).toFixed(2)} Stunden</p>`;
+			var weekly_salary = weekly_hours/60;
+			this.info_hours.innerHTML = `<p>Wochenarbeitszeit: <b>${(weekly_hours/60).toFixed(2)} Stunden</b></p>`;
 		}
-		var weekly_salary = 50;
-		this.info_calculation.innerHTML = `(${this.salary} / 50) &middot; (<b>50</b> &middot; 1`;
+		this.info_calculation.innerHTML = `(${this.salary} / 50) &middot; (<b>${(weekly_salary).toFixed(2)}</b>`;
 		for (let hourly_threshold in OT_WEEKLY) {
 			let factor = OT_WEEKLY[hourly_threshold];
 			hours[factor] = Math.min((weekly_hours / 60)-prev_thresh, hourly_threshold-prev_thresh);
 			if (factor > 1) {
-				weekly_salary += hours[factor].toFixed(2) * factor;
-				this.info_hours.innerHTML += `<p class="attn2-1">${hours[factor].toFixed(2)} wöchentliche Überstunde(n) ab Stunde ${Number(prev_thresh)+1}: <b>+${Math.round((factor-1)*100)}%</b>`;
-				this.info_calculation.innerHTML += ` + <span class="attn2-1"><b>${hours[factor].toFixed(2)}</b> &middot; ${factor}</span>`;
+				weekly_salary += hours[factor] * (factor-1);
+				this.info_hours.innerHTML += `<p class="attn2-1"><b>${hours[factor].toFixed(2)}</b> wöchentliche Überstunde(n) ab Stunde ${Number(prev_thresh)+1}: <span class="underlined">+${Math.round((factor-1)*100)}%</span>`;
+				this.info_calculation.innerHTML += ` + <span class="attn2-1"><b>${hours[factor].toFixed(2)}</b> &middot; <span class="underlined">${(factor-1).toFixed(2)}</span></span>`;
 			}
 			prev_thresh = hourly_threshold;
 			if (weekly_hours / 60 <= hourly_threshold) {
@@ -123,9 +124,9 @@ class Eduard {
 		for (let thresh in OT_DAILY) {
 			let factor = OT_DAILY[thresh];
 			if (factor > 1 && daily_overtime[factor] > 0) {
-				weekly_salary += (factor-1).toFixed(2) * daily_overtime[factor];
-				this.info_hours.innerHTML += `<p class="attn1-1">${daily_overtime[factor].toFixed(2)} tägliche Überstunde(n) ab Stunde  ${Number(prev_thresh)+1}: <b>+${Math.round((factor-1)*100)}%</b>`;
-				this.info_calculation.innerHTML += ` + <span class="attn1-1"><b>${daily_overtime[factor].toFixed(2)}</b> &middot; ${(factor-1).toFixed(2)}</span>`;
+				weekly_salary += daily_overtime[factor] * (factor-1);
+				this.info_hours.innerHTML += `<p class="attn1-1"><b>${daily_overtime[factor].toFixed(2)}</b> tägliche Überstunde(n) ab Stunde  ${Number(prev_thresh)+1}: <span class="underlined">+${Math.round((factor-1)*100)}%</span>`;
+				this.info_calculation.innerHTML += ` + <span class="attn1-1"><b>${daily_overtime[factor].toFixed(2)}</b> &middot; <span class="underlined">${(factor-1).toFixed(2)}</span></span>`;
 			}
 			prev_thresh = thresh;
 		}
@@ -181,6 +182,8 @@ class EdeDay extends HTMLDivElement {
 			(e) => this.calculateHours(e)
 		);
 		
+		this.append(document.createTextNode(' - '));
+		
 		this.end_input = this.appendChild(
 			document.createElement('input')
 		);
@@ -216,7 +219,7 @@ class EdeDay extends HTMLDivElement {
 				this.info_hours.innerHTML = `<p>Tägliche Arbeitszeit: ${hrs} Stunden`;
 				if (this.duration < 480) {
 					this.duration = 480;
-					this.info_hours.innerHTML += ' <span class="warning3">(Mit <b>8 Stunden</b> angerechnet!)</span>';
+					this.info_hours.innerHTML += ' <span class="warning2">(Mit <b>8 Stunden</b> angerechnet!)</span>';
 				}
 				this.info_hours.innerHTML += '</p>';
 				// Überstunden und Zulagen berechnen
@@ -226,7 +229,7 @@ class EdeDay extends HTMLDivElement {
 					let factor = OT_DAILY[hourly_threshold];
 					this.hours[factor] = Math.min((this.duration / 60)-prev_thresh, hourly_threshold-prev_thresh);
 					if (factor > 1) {
-						this.info_hours.innerHTML += `<p class="attn1-1">${this.hours[factor].toFixed(2)} Überstunde(n) ab Stunde ${Number(prev_thresh)+1}: <b>+${Math.round((factor-1)*100)}%</b>`;
+						this.info_hours.innerHTML += `<p class="attn1-1"><b>${this.hours[factor].toFixed(2)}</b> Überstunde(n) ab Stunde ${Number(prev_thresh)+1}: <span class="underlined">+${Math.round((factor-1)*100)}%</span>`;
 					}
 					prev_thresh = hourly_threshold;
 					if (this.duration / 60 <= hourly_threshold) {

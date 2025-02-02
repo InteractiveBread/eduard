@@ -1,5 +1,10 @@
 # Eduard - Changelog
 
+## 0.1.3 (2025-02-02)
+
+### eduard.js / style.css
+- Style-/Layout-Update
+
 ## 0.1.2 (2025-01-29)
 
 ### index.html / style.css
