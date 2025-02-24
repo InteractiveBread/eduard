@@ -101,7 +101,7 @@ class Eduard {
 				if (!Boolean(weekends_and_holidays[day.weekend_or_holiday])) {
 					weekends_and_holidays[day.weekend_or_holiday] = day.duration;
 				} else {
-					weekends_and_holidays[day.weekend_or_holiday] = day.duration;
+					weekends_and_holidays[day.weekend_or_holiday] += day.duration;
 				}
 			}
 		}
