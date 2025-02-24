@@ -1,5 +1,10 @@
 # Eduard - Changelog
 
+## 0.1.10 (2025-02-24)
+
+- Verrechnung der 11. Stunde Arbeitszeit erstmal wieder ignoriert (Fehlinfo?)
+- Nachtarbeitszuschlag (Arbeit nach Mitternacht noch nicht möglich)
+
 ## 0.1.9 (2025-02-24)
 
 - Verrechnung der 11. Stunde Arbeitszeit auf andere Tage mit weniger als 10 Stunden

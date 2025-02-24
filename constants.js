@@ -55,19 +55,31 @@ const SALARIES = {
 //   + 10 : 1 -> Bis 10 Stunden normaler Lohn
 //   + 11 : 1.25 -> 11. Stunde +25% (Faktor: 1.25)
 //   + 12 : 1.5 -> 12. Stunde +50%
-//   + 13 : 1.6 -> 13. Stunde +60% (NUR IN AUSNAHMEFÄLLEN MÖGLICH!)
-//   + 24 : 2 -> jede weitere Stunde +100% (NUR IN AUSNAHMEFÄLLEN MÖGLICH!)
+//
+//   Alles ab Stunde 13 eigentlich nicht mehr erlaubt.
+//   Im Tarifvertrag stehn da keine gesonderten Zuschläge (?)
+//   + 13 : 1.6 -> 13. Stunde +60% (????) (NUR IN AUSNAHMEFÄLLEN MÖGLICH!)
+//   + 24 : 2 -> jede weitere Stunde +100% (????) (NUR IN AUSNAHMEFÄLLEN MÖGLICH!)
 const OT_DAILY = {
 	10 : 1,
 	11 : 1.25,
-	12 : 1.5,
-	13 : 1.6,
-	24 : 2
+	24 : 1.5,
+	//~ 12 : 1.5,
+	//~ 13 : 1.6,
+	//~ 24 : 2
 };
 
 // Obergrenze tägl. Arbeitszeit: 12 Stunden!
 //   + in Ausnahmefällen Mehrarbeit möglich
 const OT_DAILY_CUTOFF = 12;
+
+// Nachtarbeit
+// + zwischen 22:00 und 06:00 Uhr -> +25%
+const OT_NIGHT = {
+	'start' : '22:00',
+	'end' : '06:00',
+	'factor' : 1.25,
+};
 
 // Wochenenden und Feiertage
 // + Samstage -> +25%
@@ -96,5 +108,8 @@ const OT_WEEKLY = {
 	55 : 1.25,
 	168 : 1.5,
 };
+
+// Obergrenze wöchentl. Arbeitszeit: 60 Stunden
+const OT_WEEKLY_CUTOFF = 60;
 
 console.info('Constants defined');
