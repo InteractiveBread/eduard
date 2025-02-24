@@ -77,7 +77,15 @@ const OT_WEEKENDS_HOLIDAYS = {
 	'sat' : 1.25,
 	'sun' : 1.75,
 	'hol' : 2
-}
+};
+
+// Ruhezeiten
+// + bis 11 Stunden Arbeitszeit -> 11 Stunden
+// + bei über 11 Stunden Arbeitszeit -> 11,5 Stunden
+const REST_PERIOD = {
+	11 : 11,
+	24 : 11.5,
+};
 
 // Wöchentliche Überstunden
 // + 50 Stunden -> regulär

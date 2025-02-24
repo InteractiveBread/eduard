@@ -286,7 +286,9 @@ class EdeDay extends HTMLDivElement {
 						break;
 					}
 				}
-				// 2. Wochenend- und Feiertagszuschläge
+				// 2. Nachzuschläge
+				// @TODO
+				// 3. Wochenend- und Feiertagszuschläge
 				if (this.weekend_or_holiday) {
 					let factor = OT_WEEKENDS_HOLIDAYS[this.weekend_or_holiday]-1
 					let label = 'Zuschlag';
@@ -299,6 +301,14 @@ class EdeDay extends HTMLDivElement {
 					}
 					this.info_hours.innerHTML += `<p class="attn1-2"><b>${label}:</b> <span class="underlined">+${factor*100}%</span></p>`;
 				}
+				// 4. Ruhezeiten
+				for (let threshold in REST_PERIOD) {
+					if (this.duration / 60 <= threshold) {
+						this.rest_period = REST_PERIOD[threshold];
+						break;
+					}
+				} 
+				this.info_hours.innerHTML += `<p class="mute">(Ruhezeit: <b>${this.rest_period}</b> Stunden)</p>`;
 			}
 		} else {
 			this.duration = 0;

@@ -1,5 +1,9 @@
 # Eduard - Changelog
 
+## 0.1.7 (2025-02-24)
+
+- Ruhezeiten werden angezeigt _(aber Einhaltung noch nicht überprüft)_
+
 ## 0.1.6 (2025-02-24)
 
 - Wochenend- und Feiertagszuschläge
