@@ -4,7 +4,7 @@
 		<title></title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="style.css?v=<?php echo filemtime('style.css'); ?>">
 	</head>
 	<body>
 		<header>
@@ -40,7 +40,7 @@
 			<a href="https://github.com/InteractiveBread/eduard/" title="Eduard bei GitHub" target="_blank">GitHub-Repo</a><br>
 			<i>Interactive Bread, 2025</i>
 		</footer>
-		<script src="constants.js"></script>
-		<script src="eduard.js"></script>
+		<script src="constants.js?v=<?php echo filemtime('constants.js'); ?>"></script>
+		<script src="eduard.js?v=<?php echo filemtime('eduard.js'); ?>"></script>
 	</body>
 </html>
