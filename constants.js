@@ -55,14 +55,29 @@ const SALARIES = {
 //   + 10 : 1 -> Bis 10 Stunden normaler Lohn
 //   + 11 : 1.25 -> 11. Stunde +25% (Faktor: 1.25)
 //   + 12 : 1.5 -> 12. Stunde +50%
+//   + 13 : 1.6 -> 13. Stunde +60% (NUR IN AUSNAHMEFÄLLEN MÖGLICH!)
+//   + 24 : 2 -> jede weitere Stunde +100% (NUR IN AUSNAHMEFÄLLEN MÖGLICH!)
 const OT_DAILY = {
 	10 : 1,
 	11 : 1.25,
-	12 : 1.5
+	12 : 1.5,
+	13 : 1.6,
+	24 : 2
 };
 
 // Obergrenze tägl. Arbeitszeit: 12 Stunden!
+//   + in Ausnahmefällen Mehrarbeit möglich
 const OT_DAILY_CUTOFF = 12;
+
+// Wochenenden und Feiertage
+// + Samstage -> +25%
+// + Sonntage -> +75%
+// + Feiertage -> +100%
+const OT_WEEKENDS_HOLIDAYS = {
+	'sat' : 1.25,
+	'sun' : 1.75,
+	'hol' : 2
+}
 
 // Wöchentliche Überstunden
 // + 50 Stunden -> regulär

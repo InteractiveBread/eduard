@@ -83,6 +83,7 @@ class Eduard {
 	calculateWeeklyHours() {
 		let weekly_hours = 0;
 		let daily_overtime = {};
+		let weekends_and_holidays = {};
 		for (let day of this.days.children) {
 			weekly_hours += day.duration;
 			for (let threshold in OT_DAILY) {
@@ -94,6 +95,13 @@ class Eduard {
 					if (Boolean(day.hours[factor])) {
 						daily_overtime[factor] += day.hours[factor]
 					}
+				}
+			}
+			if (day.weekend_or_holiday) {
+				if (!Boolean(weekends_and_holidays[day.weekend_or_holiday])) {
+					weekends_and_holidays[day.weekend_or_holiday] = day.duration;
+				} else {
+					weekends_and_holidays[day.weekend_or_holiday] = day.duration;
 				}
 			}
 		}
@@ -121,6 +129,7 @@ class Eduard {
 				break;
 			}
 		}
+		// Tägliche Überstunden berechnen
 		prev_thresh = 0;
 		for (let thresh in OT_DAILY) {
 			let factor = OT_DAILY[thresh];
@@ -130,6 +139,24 @@ class Eduard {
 				this.info_calculation.innerHTML += ` + <span class="attn1-1"><b>${daily_overtime[factor].toFixed(2)}</b> &middot; <span class="underlined">${(factor-1).toFixed(2)}</span></span>`;
 			}
 			prev_thresh = thresh;
+		}
+		// Wochenend- und Feiertagszuschläge berechnen
+		for (let wh in OT_WEEKENDS_HOLIDAYS) {
+			if (Boolean(weekends_and_holidays[wh])) {
+				let factor = OT_WEEKENDS_HOLIDAYS[wh];
+				let hrs = weekends_and_holidays[wh] / 60;
+				let label = 'Zuschlag';
+				if (wh == 'sat') {
+					label = 'Samstagszuschlag';
+				} else if (wh == 'sun') {
+					label = 'Sonntagszuschlag';
+				} else if (wh == 'hol') {
+					label = 'Feiertagszuschlag';
+				}
+				weekly_salary += hrs * (factor-1);
+				this.info_hours.innerHTML += `<p class="attn1-2"><b>${hrs.toFixed(2)}</b> Stunde(n) ${label}: <span class="underlined">+${Math.round((factor-1)*100)}%</span>`;
+				this.info_calculation.innerHTML += ` + <span class="attn1-2"><b>${hrs.toFixed(2)}</b> &middot; <span class="underlined">${(factor-1).toFixed(2)}</span></span>`;
+			}
 		}
 		weekly_salary *= (this.salary / 50)
 		this.info_calculation.innerHTML += `) = ${weekly_salary.toFixed(2)} €</p>`;
@@ -156,10 +183,13 @@ class EdeDay extends HTMLDivElement {
 		super()
 		this.classList.add('day');
 		
+		this.date = date;
 		this.start = date;
 		this.end = date;
 		this.duration = 0;
 		this.hours = {};
+		this.is_a_holiday = false;
+		this.weekend_or_holiday = this.getWeekendOrHoliday();
 		
 		var days = [
 			'Sonntag',
@@ -194,6 +224,20 @@ class EdeDay extends HTMLDivElement {
 			(e) => this.calculateHours(e)
 		);
 		
+		this.holiday_checkbox = document.createElement('input');
+		this.holiday_checkbox.type = 'checkbox';
+		this.holiday_checkbox.checked = false;
+		this.holiday_checkbox.addEventListener(
+			'input',
+			(e) => {
+				this.is_a_holiday = e.target.checked;
+				this.weekend_or_holiday = this.getWeekendOrHoliday();
+				this.calculateHours(e);
+			}
+		)
+		this.append(this.holiday_checkbox);
+		this.append(document.createTextNode(' Feiertag'));
+		
 		var info_box = this.appendChild(
 			document.createElement('div')
 		);
@@ -225,7 +269,7 @@ class EdeDay extends HTMLDivElement {
 					this.info_hours.innerHTML += ' <span class="warning2">(Mit <b>8 Stunden</b> angerechnet!)</span>';
 				} else if (this.duration > OT_DAILY_CUTOFF * 60) {
 					// Mehr als die täglich erlaubte Arbeitszeit?
-					this.info_hours.innerHTML += `<span class="warning3">(Maximale tägliche Arbeitszeit (<b>${OT_DAILY_CUTOFF} Stunden</b>) überschritten!)</span>`;
+					this.info_hours.innerHTML += `<span class="warning3">Tägliche Höchstarbeitszeit (<b>${OT_DAILY_CUTOFF} Stunden</b>) überschritten!<br><i>(In Ausnahmefällen möglich)</i></span>`;
 				}
 				this.info_hours.innerHTML += '</p>';
 				// Überstunden und Zulagen berechnen
@@ -242,6 +286,19 @@ class EdeDay extends HTMLDivElement {
 						break;
 					}
 				}
+				// 2. Wochenend- und Feiertagszuschläge
+				if (this.weekend_or_holiday) {
+					let factor = OT_WEEKENDS_HOLIDAYS[this.weekend_or_holiday]-1
+					let label = 'Zuschlag';
+					if (this.weekend_or_holiday == 'sat') {
+						label = 'Samstagszuschlag';
+					} else if (this.weekend_or_holiday == 'sun') {
+						label = 'Sonntagszuschlag';
+					} else if (this.weekend_or_holiday == 'hol') {
+						label = 'Feiertagszuschlag';
+					}
+					this.info_hours.innerHTML += `<p class="attn1-2"><b>${label}:</b> <span class="underlined">+${factor*100}%</span></p>`;
+				}
 			}
 		} else {
 			this.duration = 0;
@@ -252,6 +309,22 @@ class EdeDay extends HTMLDivElement {
 				'dayupdate', {}
 			)
 		);
+	}
+	
+	getWeekendOrHoliday() {
+		// Wochenende oder Feiertag?
+		if (this.is_a_holiday) {
+			// Feiertag
+			return'hol';
+		} else if (this.date.getDay() == 0) {
+			// Sonntag
+			return 'sun';
+		} else if (this.date.getDay() == 6) {
+			// Samstag
+			return 'sat';
+		} else {
+			return false;
+		}
 	}
 }
 

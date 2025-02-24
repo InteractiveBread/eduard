@@ -3,7 +3,7 @@
 - [x] tägliche Überstunden
 - [x] wöchentliche Überstunden
 - [ ] Nachtzuschlag
-- [ ] Wochenend- / Feiertagszuschlag
+- [x] Wochenend- / Feiertagszuschlag
 - [ ] Pausenzeiten
 - [ ] Ruhezeiten
 - [ ] Gehaltsauswahl als `<datalist>` statt `<select>` (durchsuchbar!)
