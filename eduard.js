@@ -82,10 +82,14 @@ class Eduard {
 	
 	calculateWeeklyHours() {
 		let weekly_hours = 0;
+		let buffer = 0; // Tage mit weniger als 10 Stunden -> hier hin kann man die 11. Stunden von anderen Tagen schieben
 		let daily_overtime = {};
 		let weekends_and_holidays = {};
 		for (let day of this.days.children) {
 			weekly_hours += day.duration;
+			if (day.duration > 0 && day.duration / 60 < 10) {
+				buffer += 10 - (day.duration/60);
+			}
 			for (let threshold in OT_DAILY) {
 				let factor = OT_DAILY[threshold];
 				if (factor > 1) {
@@ -105,6 +109,7 @@ class Eduard {
 				}
 			}
 		}
+		console.log('Puffer: '+Number(buffer));
 		// Wöchentliche Überstunden berechnen
 		var hours = {};
 		let prev_thresh = 0;
@@ -133,10 +138,27 @@ class Eduard {
 		prev_thresh = 0;
 		for (let thresh in OT_DAILY) {
 			let factor = OT_DAILY[thresh];
-			if (factor > 1 && daily_overtime[factor] > 0) {
-				weekly_salary += daily_overtime[factor] * (factor-1);
-				this.info_hours.innerHTML += `<p class="attn1-1"><b>${daily_overtime[factor].toFixed(2)}</b> tägliche Überstunde(n) ab Stunde  ${Number(prev_thresh)+1}: <span class="underlined">+${Math.round((factor-1)*100)}%</span>`;
-				this.info_calculation.innerHTML += ` + <span class="attn1-1"><b>${daily_overtime[factor].toFixed(2)}</b> &middot; <span class="underlined">${(factor-1).toFixed(2)}</span></span>`;
+			if (factor > 1 && daily_overtime[factor] > 0) {	
+				if (thresh == 11 && buffer > 0) {
+					// Die 11. Stunden irgendwo anders anrechnen
+					// a) Wie groß ist der Puffer? -> einfache Anrechnung
+					var reg = Math.min(buffer, daily_overtime[factor]);
+					var ot = daily_overtime[factor] - reg;
+					// b) Berechnung
+					weekly_salary += reg;
+					weekly_salary += ot * (factor-1);
+					// c) Output
+					this.info_hours.innerHTML += '<p>';
+					this.info_hours.innerHTML += `<span class="attn1-1"><b>${ot.toFixed(2)}</b> tägliche Überstunde(n) ab Stunde  ${Number(prev_thresh)+1}: <span class="underlined">+${Math.round((factor-1)*100)}%</span><br>`;
+					this.info_hours.innerHTML += `<span class="mute">(<b class="warning1">${reg} Stunde(n)</b> ohne Zuschläge auf andere Tage mit weniger als 10 Stunden Arbeitszeit angerechnet)</span>`;
+					this.info_hours.innerHTML += '</p>';
+					this.info_calculation.innerHTML += ` + <span class="warning1"><b>${reg.toFixed(2)}</b> &middot; <span class="underlined">1</span></span>`;
+					this.info_calculation.innerHTML += ` + <span class="attn1-1"><b>${ot.toFixed(2)}</b> &middot; <span class="underlined">${(factor-1).toFixed(2)}</span></span>`;
+				} else {
+					weekly_salary += daily_overtime[factor] * (factor-1);
+					this.info_hours.innerHTML += `<p class="attn1-1"><b>${daily_overtime[factor].toFixed(2)}</b> tägliche Überstunde(n) ab Stunde  ${Number(prev_thresh)+1}: <span class="underlined">+${Math.round((factor-1)*100)}%</span></p>`;
+					this.info_calculation.innerHTML += ` + <span class="attn1-1"><b>${daily_overtime[factor].toFixed(2)}</b> &middot; <span class="underlined">${(factor-1).toFixed(2)}</span></span>`;
+				}
 			}
 			prev_thresh = thresh;
 		}

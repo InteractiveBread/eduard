@@ -1,5 +1,9 @@
 # Eduard - Changelog
 
+## 0.1.9 (2025-02-24)
+
+- Verrechnung der 11. Stunde Arbeitszeit auf andere Tage mit weniger als 10 Stunden
+
 ## 0.1.8 (2025-02-24)
 
 - Versionsnummer und Footer-Links jetzt in `info.json`

@@ -4,7 +4,7 @@
 - [x] wöchentliche Überstunden
 - [ ] Nachtzuschlag
 - [x] Wochenend- / Feiertagszuschlag
-- [ ] Verrechnung 11. Stunde
+- [x] Verrechnung 11. Stunde
 - [ ] Pausenzeiten
 - [ ] Ruhezeiten
   - [x] Hinweis bei den einzelnen Tagen
