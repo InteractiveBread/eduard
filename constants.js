@@ -2,9 +2,50 @@
 // + Keys: Berufsbezeichnungen
 // + Values: Gehälter
 const SALARIES = {
-	'Test 1' : 1234,
-	'Test 2' : 2345,
-	'Test 3' : 3456,
+	'Regie-Assistenz' : 1553,
+	'2. Regie-Assistenz' : 943,
+	'Script Continuity' : 1292,
+	'Herstellungsleitung' : 2643,
+	'Produktionsleitung' : 2003,
+	'Produktionsleitungs-Assistenz' : 1472,
+	'1. Aufnahmeleitung' : 1553,
+	'2. Aufnahmeleitung' : 1160,
+	'Motiv-Aufnahmeleitung' : 1160,
+	'Set-AL Assistenz' : 943,
+	'Filmgeschäftsführung' : 1518,
+	'Assistenz der Filmgeschäftsführung' : 1160,
+	'Filmbuchhaltung inkl. Kassenführung' : 1160,
+	'Produktions-Sekretariat / Team-Assistenz' : 1134,
+	'Produktionsfahrer (mit Produktionserfahrung)' : 896,
+	'Kameramann/-frau' : 3151,
+	'Kamera-Schwenker (nicht lichtsetzend)' : 1791,
+	'1. Kamera-Assistenz /DIT (Digital Imaging Technican)' : 1542,
+	'2. Kamera-Assistenz / Daten-Assistenz' : 1160,
+	'Material-Assistenz' : 1160,
+	'Data Wrangler (HD)' : 1160,
+	'Oberbeleuchter' : 1742,
+	'Lichttechniker' : 1322,
+	'Lichtassistenz (mit Produktionserfahrung)' : 943,
+	'1. Kamerabühne' : 1636,
+	'Kamerabühnen-Assistenz' : 1064,
+	'Schnitt (Filmeditor)' : 1696,
+	'1. Schnitt-Assistenz' : 1064,
+	'2. Schnitt-Assistenz' : 943,
+	'Szenenbild' : 1906,
+	'Szenenbild-Assistenz' : 1326,
+	'Außen-Requisite' : 1434,
+	'Setrequisite (vorher Innen-Requisite)' : 1292,
+	'Requisiten-Assistenz' : 943,
+	'Location-Scouting' : 1160,
+	'Kostümbild' : 1696,
+	'Kostümbild-Assistenz' : 1254,
+	'Kostümberatung' : 1482,
+	'Garderobe/Gewand' : 1224,
+	'Maskenbild' : 1482,
+	'Ton' : 1782,
+	'Ton-Assistenz' : 1292,
+	'2. Ton-Assistenz' : 943,
+	'Sounddesign' : 1636,
 };
 
 // Tägliche Überstunden
@@ -12,18 +53,25 @@ const SALARIES = {
 // + Values: Faktor für den Stundenlohn
 // z.B.
 //   + 10 : 1 -> Bis 10 Stunden normaler Lohn
-//   + 12 : 1.5 -> Bis 12 Stunden 50% Zuschlag (Faktor 1.5)
+//   + 11 : 1.25 -> 11. Stunde +25% (Faktor: 1.25)
+//   + 12 : 1.5 -> 12. Stunde +50%
 const OT_DAILY = {
-	12 : 1,
-	13 : 1.6,
-	24 : 2
-}
+	10 : 1,
+	11 : 1.25,
+	12 : 1.5
+};
+
+// Obergrenze tägl. Arbeitszeit: 12 Stunden!
+const OT_DAILY_CUTOFF = 12;
 
 // Wöchentliche Überstunden
+// + 50 Stunden -> regulär
+// + 51 - 55 -> +25%
+// + jede weitere -> +50%
 const OT_WEEKLY = {
 	50 : 1,
-	60 : 1.25,
+	55 : 1.25,
 	168 : 1.5,
-}
+};
 
 console.info('Constants defined');

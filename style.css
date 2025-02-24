@@ -2,6 +2,7 @@
 	--bg: #1c1f1c;
 	--bg-light: #202320;
 	--text: #eee;
+	--text-medium: #969696;
 	--text-dark: #a9a9a9;
 	--main-light: #00cf00;
 	--main-medium: #009a00;
@@ -26,11 +27,17 @@
 .attn2-2 { color: var(--attn2-2); }
 .attn2-3 { color: var(--attn2-3); }
 .underlined { text-decoration: underline; }
+.mute {
+	color: var(--text-medium);
+	font-size: 0.7rem;
+}
 body {
 	font-family: sans-serif;
 	line-height: 1.2rem;
 	background-color: var(--bg);
 	color: var(--text);
+	max-width: 800px;
+	margin:auto;
 }
 header {
 	text-align: center;

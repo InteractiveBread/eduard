@@ -213,14 +213,19 @@ class EdeDay extends HTMLDivElement {
 		if (!isNaN(this.start) && !isNaN(this.end)) {
 			this.duration = Math.round(((this.end - this.start) / 1000) / 60);
 			if (this.duration <= 0) {
+				// Negative Stundenzahl?
 				this.duration = 0;
 				this.info_hours.innerText = 'Ende liegt vor dem Start!';
 			} else {
 				let hrs = (this.duration / 60).toFixed(2);
 				this.info_hours.innerHTML = `<p>Tägliche Arbeitszeit: ${hrs} Stunden`;
 				if (this.duration < 480) {
+					// Weniger als 8 Stunden?
 					this.duration = 480;
 					this.info_hours.innerHTML += ' <span class="warning2">(Mit <b>8 Stunden</b> angerechnet!)</span>';
+				} else if (this.duration > OT_DAILY_CUTOFF * 60) {
+					// Mehr als die täglich erlaubte Arbeitszeit?
+					this.info_hours.innerHTML += `<span class="warning3">(Maximale tägliche Arbeitszeit (<b>${OT_DAILY_CUTOFF} Stunden</b>) überschritten!)</span>`;
 				}
 				this.info_hours.innerHTML += '</p>';
 				// Überstunden und Zulagen berechnen

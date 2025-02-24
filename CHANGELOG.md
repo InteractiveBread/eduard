@@ -1,6 +1,11 @@
 # Eduard - Changelog
 
-## 0.1.3 (2025-02-02)
+## 0.1.5 (2025-02-24)
+
+- aktuelle Gagen und Überstundensätze
+- maximale tägliche Arbeitszeit
+
+## 0.1.4 (2025-02-02)
 
 ### eduard.js / index.html / style.css
 - Layout-Update
