@@ -1,5 +1,9 @@
 # Eduard - Changelog
 
+## 0.1.8 (2025-02-24)
+
+- Versionsnummer und Footer-Links jetzt in `info.json`
+
 ## 0.1.7 (2025-02-24)
 
 - Ruhezeiten werden angezeigt _(aber Einhaltung noch nicht überprüft)_

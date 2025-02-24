@@ -1,0 +1,15 @@
+{
+	"version" : "0.1.8",
+	"links" : {
+		"license" : {
+			"label" : "GNU GPLv3",
+			"title" : "Lizenz: GNU GPLv3",
+			"url" : "LICENSE"
+		},
+		"repo" : {
+			"label" : "GitHub-Repo",
+			"title" : "Eduard bei GitHub",
+			"url" : "https://github.com/InteractiveBread/eduard/"
+		}
+	}
+}

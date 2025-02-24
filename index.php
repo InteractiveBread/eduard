@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+	$info = json_decode(
+		file_get_contents(
+			'info.json'
+		), true
+	);
+?>
 <html lang="de">
 	<head>		
 		<title></title>
@@ -35,9 +42,12 @@
 			</div>
 		</main>
 		<footer>
-			Eduard 0.1.7<br>
-			<a href="LICENSE" title="Lizenz: GNU GPLv3" target="_blank">GNU GPLv3</a><br>
-			<a href="https://github.com/InteractiveBread/eduard/" title="Eduard bei GitHub" target="_blank">GitHub-Repo</a><br>
+			Eduard <?php echo $info['version']; ?><br>
+			<?php
+				foreach ($info['links'] as $key => $link) {
+					echo '<a href="', $link['url'], '" title="', $link['title'], '" target="_blank">', $link['label'], '</a><br>';
+				}
+			?>
 			<i>Interactive Bread, 2025</i>
 		</footer>
 		<script src="constants.js?v=<?php echo filemtime('constants.js'); ?>"></script>
