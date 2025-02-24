@@ -1,5 +1,9 @@
 # Eduard - Changelog
 
+## 0.1.11 (2025-02-24)
+
+- Fixe Pausenzeit von 45 Minuten pro Tag eingerechnet
+
 ## 0.1.10 (2025-02-24)
 
 - Verrechnung der 11. Stunde Arbeitszeit erstmal wieder ignoriert (Fehlinfo?)

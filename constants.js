@@ -91,6 +91,10 @@ const OT_WEEKENDS_HOLIDAYS = {
 	'hol' : 2
 };
 
+// Pausen
+// + fixe Pause von 45 Minuten pro Tag = 0,75 Stunden
+const BREAK = 0.75;
+
 // Ruhezeiten
 // + bis 11 Stunden Arbeitszeit -> 11 Stunden
 // + bei über 11 Stunden Arbeitszeit -> 11,5 Stunden

@@ -292,14 +292,14 @@ class EdeDay extends HTMLDivElement {
 		this.end = this.getTime(this.end_input.value);
 		this.hours = {};
 		if (!isNaN(this.start) && !isNaN(this.end)) {
-			this.duration = Math.round(((this.end - this.start) / 1000) / 60);
+			this.duration = Math.round(((this.end - this.start) / 1000) / 60) - BREAK*60;
 			if (this.duration <= 0) {
 				// Negative Stundenzahl?
 				this.duration = 0;
 				this.info_hours.innerText = 'Ende liegt vor dem Start!';
 			} else {
 				let hrs = (this.duration / 60).toFixed(2);
-				this.info_hours.innerHTML = `<p>Tägliche Arbeitszeit: ${hrs} Stunden`;
+				this.info_hours.innerHTML = `<p>Tägliche Arbeitszeit: ${hrs} Stunden <i>(Pause: ${BREAK*60} Minuten)</i>`;
 				if (this.duration < 480) {
 					// Weniger als 8 Stunden?
 					this.duration = 480;

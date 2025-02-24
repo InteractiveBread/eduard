@@ -8,6 +8,8 @@
 - [x] Wochenend- / Feiertagszuschlag
 - [x] ~~Verrechnung 11. Stunde~~ War irgendwie ne Fehlinfo. Da kann man gar nichts verrechnen.
 - [ ] Pausenzeiten
+  - [x] fixe Pausenzeit von 45 Minuten
+  - [ ] **Edge Case:** Arbeitszeit von weniger als 45 Minuten 
 - [ ] Ruhezeiten
   - [x] Hinweis bei den einzelnen Tagen
   - [ ] Überprüfung, ob Ruhezeiten eingahlten werden
